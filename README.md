@@ -2,7 +2,19 @@
 
 人教版七年级上册数学运算练习与学习记录页面。
 
-在线页面：https://math-lab-grade7-felix.ys235.chatgpt.site/
+独立网页：https://shengyue9999.github.io/grade7-math-practice/
+
+## GitHub Pages 版本（无需登录）
+
+独立网页保留全部练习、测评、错题与推荐功能。记录保存在当前浏览器的 localStorage 中，最多保留最近 3000 次答题；不跨设备同步，清除网站数据会删除记录。原 Sites 网站的数据不会自动迁移到此页面。
+
+```sh
+npm run install:ci
+npm run dev:pages
+npm run build:pages
+```
+
+`pages/` 是独立网页入口；输出在 `pages-dist/`。推送到 `main` 后，`.github/workflows/pages.yml` 自动构建并发布 GitHub Pages。此版本无需数据库或 ChatGPT 服务。以下账号保存与数据库说明对应仓库中保留的原始 Sites 版本。
 
 ## 功能
 
