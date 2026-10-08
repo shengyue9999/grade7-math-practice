@@ -1,3 +1,51 @@
+# 运算练习室
+
+人教版七年级上册数学运算练习与学习记录页面。
+
+在线页面：https://math-lab-grade7-felix.ys235.chatgpt.site/
+
+## 功能
+
+- 六个专项：有理数加减、有理数乘除、乘方与混合运算、简便计算、整式化简求值、一元一次方程。
+- 12 题基础测评、每组 8 题的专项练习、基础与进阶难度。
+- 根据每项最近 20 题的正确率推荐练习，优先补齐未测项目。
+- 数字、小数、分数答案判定，以及逐步解题说明。
+- 错题重练、订正标记、答题时间和历史记录。
+- 使用 Cloudflare D1 持久化，记录按登录账号隔离。
+
+## 本地运行
+
+要求 Node.js >=22.13.0。
+
+```sh
+npm run install:ci
+npm run db:generate
+npm run build
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_military_nomad.sql
+npm run dev
+```
+
+已有的数据库迁移无需再次生成；本地迁移只在对应数据库首次使用时执行一次。打开终端显示的本地网址，再访问 `/signin-with-chatgpt?return_to=/`，使用开发环境的模拟账号进行练习。
+
+## 代码结构
+
+- `app/practice.tsx`：练习、错题本、统计和学习记录界面。
+- `lib/math.ts`：题目生成、解题步骤和答案格式解析。
+- `app/api/attempts/route.ts`：记录保存与读取接口。
+- `db/schema.ts`、`drizzle/`：数据库结构和迁移。
+- `app/chatgpt-auth.ts`：Sites 登录身份读取。
+- `.openai/hosting.json`：现有 Sites 项目与 D1 绑定配置。
+
+## 发布说明
+
+这是完整的前端与记录保存服务项目，GitHub 用于保存源码；现有网站继续由 Sites 托管。GitHub Pages 不能直接运行此项目的服务端接口。若迁移到其他平台，需要配置 D1 数据库，并替换 Sites 提供的登录与可信身份传递机制；不要在公开服务上直接信任客户端传入的身份请求头。
+
+仓库不包含用户练习数据、凭证或本地依赖目录。线上练习数据保存在数据库中，不随代码上传。
+
+以下保留框架与本地开发的详细说明。
+
+---
+
 # vinext-starter
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
